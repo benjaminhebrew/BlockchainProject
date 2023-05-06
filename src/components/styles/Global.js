@@ -14,6 +14,14 @@ const GlobalStyle = createGlobalStyle`
 	body{
 		font-size: 100%;
 		font-family: ${({theme}) => theme.font.montserrat}
+		width: 400px;
+		height: 700px;
+		background-color: ${({theme}) => theme.backgroundColor.darkblue};
+		color: ${({ theme }) => theme.color.light};
+		border: solid;
+		border-color: ${({theme}) => theme.backgroundColor.darkblue};
+		border-radius: 20px;
+		padding: 30px 50px 0px 30px;
 	}
 
 	img{
