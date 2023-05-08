@@ -1,31 +1,17 @@
-// SPDX-License-Identifier: MIT
-pragma solidity 0.8.16;
-
+pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-
 contract StknICO {
-    //Administration Details
     address public admin;
-    address payable public ICOWallet; //address which can save ether
-
-    //Token
+    address payable public ICOWallet;
     IERC20 public token;
-
-    //ICO Details
-	uint public premint = 500000;
-    uint public tokenPrice = 0.001 BNB;
-    uint public hardCap = 1 BNB;
-	uint public softCap = 0.1 BNB;
+    uint public tokenPrice = 0.0001 ether;
+    uint public hardCap = 500 ether;
     uint public raisedAmount;
-    uint public minInvestment = 0.01 BNB;
-    uint public maxInvestment = 0.05 BNB;
-    uint public icoStartTime = 5/8/2023 0 AM GMT;
-    uint public icoEndTime = 5/9/2023 0 AM GMT;
-
-    //Investor
+    uint public minInvestment = 0.001 ether;
+    uint public maxInvestment = 3 ether;
+    uint public icoStartTime;
+    uint public icoEndTime;
     mapping(address => uint) public investedAmountOf;
-
-    //ICO State
     enum State {
         BEFORE,
         RUNNING,
@@ -33,41 +19,28 @@ contract StknICO {
         HALTED
     }
     State public ICOState;
-
-    //Events
-    event Invest( //logged to transaction log
+    event Invest(
         address indexed from,
         address indexed to,
         uint value,
         uint tokens
     );
     event TokenBurn(address to, uint amount, uint time);
-
-    //Initialize Variables
     constructor(address payable _icoWallet, address _token) {
         admin = msg.sender;
         ICOWallet = _icoWallet;
         token = IERC20(_token);
     }
-
-    //Access Control
     modifier onlyAdmin() {
         require(msg.sender == admin, "Admin Only function");
         _;
     }
-
-    //Receive Ether Directly
     receive() external payable {
         invest();
     }
-
     fallback() external payable {
         invest();
     }
-
-    /* Functions */
-
-    //Get ICO State
     function getICOState() external view returns (string memory) {
         if (ICOState == State.BEFORE) {
             return "Not Started";
@@ -79,18 +52,30 @@ contract StknICO {
             return "Halted";
         }
     }
-
-    /* Admin Functions */
-
-    //Start, Halt and End ICO
     function startICO() external onlyAdmin {
-        require(block.time == State.BEFORE, "ICO isn't in before state");
+        require(ICOState == State.BEFORE, "ICO isn't in before state");
 
         icoStartTime = block.timestamp;
-        icoEndTime = icoStartTime + (24 * 60 * 60);
+        icoEndTime = icoStartTime + (86400 * 365);
         ICOState = State.RUNNING;
     }
-    //Invest
+
+    function haltICO() external onlyAdmin {
+        require(ICOState == State.RUNNING, "ICO isn't running yet");
+        ICOState = State.HALTED;
+    }
+    function resumeICO() external onlyAdmin {
+        require(ICOState == State.HALTED, "ICO State isn't halted yet");
+        ICOState = State.RUNNING;
+    }
+
+    function changeICOWallet(address payable _newICOWallet) external onlyAdmin {
+        ICOWallet = _newICOWallet;
+    }
+    function changeAdmin(address _newAdmin) external onlyAdmin {
+        admin = _newAdmin;
+    }
+
     function invest() public payable returns (bool) {
         require(ICOState == State.RUNNING, "ICO isn't running");
         require(
@@ -117,7 +102,7 @@ contract StknICO {
         (bool transferSuccess, ) = ICOWallet.call{value: msg.value}("");
         require(transferSuccess, "Failed to Invest");
 
-        uint tokens = msg.value / tokenPrice;
+        uint tokens = (msg.value / tokenPrice) * 1e18;
         bool saleSuccess = token.transfer(msg.sender, tokens);
         require(saleSuccess, "Failed to Invest");
 
