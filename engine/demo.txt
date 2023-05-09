@@ -1,7 +1,32 @@
 this is testsuit's bran
-wef
-wf
-wef
-wef
-ewf
-ch
+
+1. Network test
+
+1) Does the selected network exist?
+2) Dose the network exactly connect?
+3) Is there a unrecognized account?
+4) Does the transaction prarmeter miss?
+5) Is there a remote account available?
+
+2. Task Definition test
+
+1) Can we add positional param?
+2) Do Hardhat and task param's name clash?
+3) Does the task run without an action?
+
+3. Build-in tasks test
+
+1) Do tasks exactly compile?
+2) Does the script exactly run?
+3) Does the project exactly compile?
+
+4. Internal Hardhat test
+
+1) Is the message template true?
+2) Does inferred artifact path exist?
+
+5. Source test
+
+1) If a solidity source name was expected, an absolute path or relative path was given?
+2) Is the solidity file incorrect casing when you try to resolve it?
+3) Does the solidity source file exist?
