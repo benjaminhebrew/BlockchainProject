@@ -2,15 +2,15 @@ import React, { Components } from "react";
 import { Progress, Tooltip, Space } from 'antd';
 
 function currentPro(){
-	return 30;
+	return 5;
 }
 
 function minimumPro(){
-	return 60;
+	return 10;
 }
 
 function showTitle(){
-	var t = "current / 0.1 minimum / 2 successful"
+	var t = "current / 0.1 BNB softCap / 1 BNB hardCap"
 	return t;
 }
 

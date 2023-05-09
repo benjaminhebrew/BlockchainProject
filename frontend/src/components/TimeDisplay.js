@@ -47,8 +47,8 @@ export function STime() {
 	return (
 		<StyledCTime>
 			<FieldTimeOutlined style={{ float: "left", fontSize: "17px", padding: "5px" }} />
-			<Title id="start_time" level={4} style={{ color: "white", fontFamily: "'Montserrat', sans-serif", width: "250px" }}>
-				6/5/2023 00/00/00
+			<Title id="start_time" level={4} style={{ color: "white", fontFamily: "'Montserrat', sans-serif", width: "260px" }}>
+				10/5/2023 00/00/00
 			</Title>
 		</StyledCTime>
 	)
@@ -60,8 +60,8 @@ export function ETime() {
 	return (
 		<StyledCTime style={{ float: "right"}}>
 			<FieldTimeOutlined style={{ float: "left", fontSize: "17px", padding: "5px" }} />
-			<Title id="end_time" level={4} style={{ color: "white", fontFamily: "'Montserrat', sans-serif", width: "250px" }}>
-				7/5/2023 00/00/00
+			<Title id="end_time" level={4} style={{ color: "white", fontFamily: "'Montserrat', sans-serif", width: "260px" }}>
+				11/5/2023 00/00/00
 			</Title>
 		</StyledCTime>
 	)

@@ -4,7 +4,6 @@ import { theme } from "./components/styles/Theme.js";
 import GlobalStyles from "./components/styles/Global";
 import {
 	ConnectButton,
-	Button
 } from "./components/Button.js";
 import {
 	CTime,
